@@ -4,11 +4,17 @@ import { paginateByCreatedAt } from "../../utils/pagination";
 import { GraphQLError } from "graphql";
 
 export const CustomerQueryResolvers = {
-  customer: (
+  customer: async (
     _parent: unknown,
     args: { id: string },
     ctx: GraphQLContext,
-  ): Promise<Customer | null> => ctx.repos.customers.getById(args.id),
+  ): Promise<Customer | null> => {
+    const c = await ctx.repos.customers.getById(args.id);
+    if (!c) {
+      throw new GraphQLError("Customer not found", { extensions: { code: "NOT_FOUND" } });
+    }
+    return c;
+  },
 
   customers: async (
     _parent: unknown,
