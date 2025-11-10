@@ -8,7 +8,7 @@ export default defineConfig({
         alias: {
             "@energy-portfolio/domain": path.resolve(__dirname, "../packages/domain/src"),
             "@energy-portfolio/shared": path.resolve(__dirname, "../packages/shared/src"),
-            "@energy-portfolio/frontend": path.resolve(__dirname, "./src")
+            "@energy-portfolio/apps/web": path.resolve(__dirname, "./src")
         }
     }
 });

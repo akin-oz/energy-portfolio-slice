@@ -42,7 +42,7 @@ const recreate = process.argv.includes("--recreate");
 const ddb = new DynamoDBClient({
     endpoint,
     region,
-    credentials: {accessKeyId: "fake", secretAccessKey: "fake"}
+    credentials: {accessKeyId: "localAccessKey", secretAccessKey: "localSecretKey"}
 });
 const doc = DynamoDBDocumentClient.from(ddb, {marshallOptions: {removeUndefinedValues: true}});
 

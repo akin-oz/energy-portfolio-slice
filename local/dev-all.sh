@@ -11,7 +11,7 @@ pnpm -C "$ROOT_DIR/services/api" dev &
 API_PID=$!
 
 echo "[dev-all] Starting frontend..."
-pnpm -C "$ROOT_DIR/frontend" dev &
+pnpm -C "$ROOT_DIR/apps/web" dev &
 FRONTEND_PID=$!
 
 cleanup() {
