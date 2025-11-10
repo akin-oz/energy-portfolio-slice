@@ -1,0 +1,21 @@
+{
+  "name": "@energy-portfolio/api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "tsx src/graphql/handler.ts",
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.12.2",
+    "@energy-portfolio/domain": "workspace:*",
+    "@energy-portfolio/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0"
+  }
+}

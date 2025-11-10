@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "lib": ["ES2022", "DOM"],
     "strict": true,
 
@@ -24,10 +24,10 @@
     "allowJs": false,
     "baseUrl": ".",
     "paths": {
+      "@energy-portfolio/domain": ["packages/domain/src"],
       "@energy-portfolio/domain/*": ["packages/domain/src/*"],
-      "@energy-portfolio/shared/*": ["packages/shared/src/*"],
-      "@energy-portfolio/api/*": ["services/api/src/*"],
-      "@energy-portfolio/frontend/*": ["frontend/src/*"]
+      "@energy-portfolio/shared": ["packages/shared/src"],
+      "@energy-portfolio/shared/*": ["packages/shared/src/*"]
     },
 
     "types": ["node", "vitest/globals"]
