@@ -44,7 +44,7 @@ export function buildPageInfo(
     const last = slice.at(-1) ?? items[0];
 
     return {
-        endCursor: encodeCursor({ pk: last.pk, sk: last.sk }),
+        endCursor: encodeCursor({pk: last.pk, sk: last.sk}),
         hasNextPage
     };
 }

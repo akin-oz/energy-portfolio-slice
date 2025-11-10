@@ -56,8 +56,8 @@ export function createEnergyAsset(
  * Simple seed set for local dev and tests.
  */
 export function createSeedData() {
-    const customerA = createCustomer({ name: "Northwind Energy GmbH" });
-    const customerB = createCustomer({ name: "Brightfield Power Ltd" });
+    const customerA = createCustomer({name: "Northwind Energy GmbH"});
+    const customerB = createCustomer({name: "Brightfield Power Ltd"});
 
     const projA1 = createProject(customerA.id, {
         name: "Rooftop Solar Phase 1",
@@ -99,5 +99,5 @@ export function createSeedData() {
     const customers = [customerA, customerB];
     const projects = [projA1, projA2, projB1];
 
-    return { customers, projects, assets };
+    return {customers, projects, assets};
 }

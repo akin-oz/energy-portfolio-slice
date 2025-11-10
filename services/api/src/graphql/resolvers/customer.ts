@@ -1,5 +1,5 @@
-import type { GraphQLContext } from "../context";
-import type { Customer } from "@energy-portfolio/domain";
+import type {GraphQLContext} from "../context";
+import type {Customer} from "@energy-portfolio/domain";
 
 export const CustomerQueryResolvers = {
     customer: (

@@ -46,8 +46,8 @@ export function validateCreateCustomerInput(
     nonEmpty(input.name, "name", errors);
 
     return errors.length === 0
-        ? { ok: true, value: input }
-        : { ok: false, errors };
+        ? {ok: true, value: input}
+        : {ok: false, errors};
 }
 
 export function validateCreateProjectInput(
@@ -62,8 +62,8 @@ export function validateCreateProjectInput(
     }
 
     return errors.length === 0
-        ? { ok: true, value: input }
-        : { ok: false, errors };
+        ? {ok: true, value: input}
+        : {ok: false, errors};
 }
 
 export function validateCreateEnergyAssetInput(
@@ -79,8 +79,8 @@ export function validateCreateEnergyAssetInput(
     positiveInt(input.capacityKw, "capacityKw", errors);
 
     return errors.length === 0
-        ? { ok: true, value: input }
-        : { ok: false, errors };
+        ? {ok: true, value: input}
+        : {ok: false, errors};
 }
 
 /**

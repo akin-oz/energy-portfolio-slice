@@ -1,7 +1,7 @@
-import type { GraphQLContext } from "../context";
-import type { Project } from "@energy-portfolio/domain";
-import { ProjectStatus } from "@energy-portfolio/domain";
-import { paginateByCreatedAt } from "../../utils/pagination";
+import type {GraphQLContext} from "../context";
+import type {Project} from "@energy-portfolio/domain";
+import {ProjectStatus} from "@energy-portfolio/domain";
+import {paginateByCreatedAt} from "../../utils/pagination";
 
 interface ProjectsArgs {
     customerId: string;
@@ -16,10 +16,10 @@ export const ProjectQueryResolvers = {
         args: ProjectsArgs,
         ctx: GraphQLContext
     ) => {
-        const { customerId, status, first, after } = args;
+        const {customerId, status, first, after} = args;
 
-        const items: Project[] = await ctx.repos.projects.listByCustomer(customerId, { status });
+        const items: Project[] = await ctx.repos.projects.listByCustomer(customerId, {status});
 
-        return paginateByCreatedAt(items, { pk: customerId, first, after });
+        return paginateByCreatedAt(items, {pk: customerId, first, after});
     }
 };
