@@ -1,8 +1,10 @@
 # energy-portfolio-slice
 
-A focused product slice that models an **energy portfolio domain** and exposes it through a **TypeScript**, **GraphQL**, and **React** stack.
+A focused product slice that models an **energy portfolio domain** and exposes it through a **TypeScript**, **GraphQL**,
+and **React** stack.
 
-The goal: show how I design and ship a vertical slice the way I’d work as a **Senior Product Engineer (Frontend)** — domain-first, API-first, observable, and safe to run.
+The goal: show how I design and ship a vertical slice the way I’d work as a **Senior Product Engineer (Frontend)** —
+domain-first, API-first, observable, and safe to run.
 
 ---
 
@@ -15,7 +17,8 @@ This repo is a compact example of how I approach:
 - **You build it, you run it** – structure for tests, monitoring, and extensions.
 - **Frontend as part of the system** – UI driven by real contracts, not mocks.
 
-It’s intentionally small, but every piece is something I’d be comfortable running in production once wired to real infra.
+It’s intentionally small, but every piece is something I’d be comfortable running in production once wired to real
+infra.
 
 ---
 
@@ -48,7 +51,8 @@ No framework gymnastics, just tools I’d pick for a real product slice.
 └─ vitest.workspace.ts
 ```
 
-This layout keeps **domain**, **infrastructure**, and **UI** cleanly separated while staying small enough to review in one sitting.
+This layout keeps **domain**, **infrastructure**, and **UI** cleanly separated while staying small enough to review in
+one sitting.
 
 ---
 
@@ -86,10 +90,16 @@ By default:
 ### Run the Web App
 
 ```bash
-pnpm dev:web
+pnpm -C apps/web dev
 ```
 
 - Web app: `http://localhost:5173` (or whatever Vite prints)
+
+Environment variables (optional):
+
+- `VITE_GRAPHQL_URL` – GraphQL endpoint URL. Defaults to `http://localhost:4000/graphql`.
+- `VITE_API_KEY` – If your API is protected by an API key, set it and the app will send it as an `x-api-key` header on
+  all GraphQL requests.
 
 ---
 
@@ -200,4 +210,3 @@ If you’re skimming:
 2. `services/api` – how I design contracts and boundaries.
 3. `apps/web` – how I integrate UI with those contracts.
 4. Tests & README – proof it’s structured like a real product slice, not a throwaway demo.
-
