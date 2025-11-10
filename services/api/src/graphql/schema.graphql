@@ -1,0 +1,80 @@
+enum ProjectStatus {
+  DRAFT
+  ACTIVE
+  HOLD
+  CLOSED
+}
+
+enum EnergyAssetType {
+  SOLAR
+  WIND
+  STORAGE
+  OTHER
+}
+
+type Customer {
+  id: ID!
+  name: String!
+  createdAt: String!
+}
+
+type Project {
+  id: ID!
+  customerId: ID!
+  name: String!
+  status: ProjectStatus!
+  createdAt: String!
+}
+
+type EnergyAsset {
+  id: ID!
+  projectId: ID!
+  type: EnergyAssetType!
+  capacityKw: Int!
+  active: Boolean!
+  createdAt: String!
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+}
+
+type ProjectEdge {
+  cursor: String!
+  node: Project!
+}
+
+type ProjectConnection {
+  edges: [ProjectEdge!]!
+  pageInfo: PageInfo!
+}
+
+type EnergyAssetEdge {
+  cursor: String!
+  node: EnergyAsset!
+}
+
+type EnergyAssetConnection {
+  edges: [EnergyAssetEdge!]!
+  pageInfo: PageInfo!
+}
+
+type Query {
+  customer(id: ID!): Customer
+  customers: [Customer!]!
+
+  projectsByCustomer(
+    customerId: ID!
+    first: Int
+    after: String
+    status: ProjectStatus
+  ): ProjectConnection!
+
+  energyAssetsByProject(
+    projectId: ID!
+    first: Int
+    after: String
+    type: EnergyAssetType
+  ): EnergyAssetConnection!
+}
