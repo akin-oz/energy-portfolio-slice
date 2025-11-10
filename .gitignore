@@ -40,3 +40,6 @@ logs/
 .sass-cache/
 .eslintcache
 .turbo/
+
+# Local DynamoDB data
+local/.dynamodb/

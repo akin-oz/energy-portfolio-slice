@@ -1,6 +1,7 @@
 import type { GraphQLContext } from "../context";
 import type { Project } from "@energy-portfolio/domain";
 import { ProjectStatus } from "@energy-portfolio/domain";
+import { paginateByCreatedAt } from "../../utils/pagination";
 
 interface ProjectsArgs {
     customerId: string;
@@ -10,34 +11,15 @@ interface ProjectsArgs {
 }
 
 export const ProjectQueryResolvers = {
-    projectsByCustomer: (
+    projectsByCustomer: async (
         _parent: unknown,
         args: ProjectsArgs,
         ctx: GraphQLContext
     ) => {
-        const { customerId, status } = args;
+        const { customerId, status, first, after } = args;
 
-        let items: Project[] = ctx.data.projects.filter(
-            (p: Project) => p.customerId === customerId
-        );
+        const items: Project[] = await ctx.repos.projects.listByCustomer(customerId, { status });
 
-        if (status) {
-            items = items.filter((p: Project) => p.status === status);
-        }
-
-        const edges = items.map(project => ({
-            cursor: project.id,
-            node: project
-        }));
-
-        const endCursor = edges.length > 0 ? edges.at(-1)?.cursor : null;
-
-        return {
-            edges,
-            pageInfo: {
-                endCursor,
-                hasNextPage: false
-            }
-        };
+        return paginateByCreatedAt(items, { pk: customerId, first, after });
     }
 };

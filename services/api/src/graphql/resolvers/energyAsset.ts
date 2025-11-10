@@ -1,6 +1,7 @@
 import type { GraphQLContext } from "../context";
 import type { EnergyAsset } from "@energy-portfolio/domain";
 import { EnergyAssetType } from "@energy-portfolio/domain";
+import { paginateByCreatedAt } from "../../utils/pagination";
 
 interface AssetsArgs {
     projectId: string;
@@ -10,34 +11,15 @@ interface AssetsArgs {
 }
 
 export const EnergyAssetQueryResolvers = {
-    energyAssetsByProject: (
+    energyAssetsByProject: async (
         _parent: unknown,
         args: AssetsArgs,
         ctx: GraphQLContext
     ) => {
-        const { projectId, type } = args;
+        const { projectId, type, first, after } = args;
 
-        let items: EnergyAsset[] = ctx.data.assets.filter(
-            (a: EnergyAsset) => a.projectId === projectId
-        );
+        const items: EnergyAsset[] = await ctx.repos.assets.listByProject(projectId, { type });
 
-        if (type) {
-            items = items.filter((a: EnergyAsset) => a.type === type);
-        }
-
-        const edges = items.map(asset => ({
-            cursor: asset.id,
-            node: asset
-        }));
-
-        const endCursor = edges.length > 0 ? edges.at(-1)?.cursor : null;
-
-        return {
-            edges,
-            pageInfo: {
-                endCursor,
-                hasNextPage: false
-            }
-        };
+        return paginateByCreatedAt(items, { pk: projectId, first, after });
     }
 };

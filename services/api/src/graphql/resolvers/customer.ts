@@ -6,15 +6,11 @@ export const CustomerQueryResolvers = {
         _parent: unknown,
         args: { id: string },
         ctx: GraphQLContext
-    ): Customer | null => {
-        return ctx.data.customers.find((c: Customer) => c.id === args.id) || null;
-    },
+    ): Promise<Customer | null> => ctx.repos.customers.getById(args.id),
 
     customers: (
         _parent: unknown,
         _args: unknown,
         ctx: GraphQLContext
-    ): Customer[] => {
-        return ctx.data.customers;
-    }
+    ): Promise<Customer[]> => ctx.repos.customers.list()
 };

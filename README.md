@@ -130,8 +130,8 @@ Once the remaining scripts are wired, the intended flow is:
 
 3. Seed sample data
 
-   `pnpm exec ts-node local/seed.ts`  
-   or a simple `pnpm seed` script.
+   `pnpm seed`  
+   Options: `pnpm seed --recreate` to drop and recreate tables first.
 
 4. Start backend and frontend
 
