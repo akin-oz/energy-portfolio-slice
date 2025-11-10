@@ -1,0 +1,16 @@
+node_modules
+dist
+build
+coverage
+.turbo
+.next
+.vite
+*.log
+pnpm-lock.yaml
+.idea
+.DS_Store
+**/.cache
+**/node_modules
+**/dist
+**/build
+

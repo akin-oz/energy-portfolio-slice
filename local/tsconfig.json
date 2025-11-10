@@ -4,11 +4,7 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "noEmit": true,
-    "types": [
-      "node"
-    ]
+    "types": ["node"]
   },
-  "include": [
-    "**/*.ts"
-  ]
+  "include": ["**/*.ts"]
 }

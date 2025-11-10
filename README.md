@@ -132,7 +132,6 @@ query Customers {
   }
 }
 
-
 # Get projects for a customer with pagination and optional status filter
 query ProjectsByCustomer {
   projectsByCustomer(customerId: "cust_1", first: 10, status: ACTIVE) {

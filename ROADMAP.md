@@ -15,14 +15,14 @@ Have a clean, compiling workspace that expresses domain and boundaries.
 Scope
 
 - Finalize monorepo wiring:
-    - root `tsconfig.base.json`, `pnpm-workspace.yaml`, `vitest.workspace.ts`
+  - root `tsconfig.base.json`, `pnpm-workspace.yaml`, `vitest.workspace.ts`
 - `packages/domain`:
-    - domain types for Customer, Project, EnergyAsset
-    - factories and seed helpers
-    - basic validation helpers
+  - domain types for Customer, Project, EnergyAsset
+  - factories and seed helpers
+  - basic validation helpers
 - `packages/shared`:
-    - error types and mapping helpers
-    - cursor-based pagination utilities
+  - error types and mapping helpers
+  - cursor-based pagination utilities
 
 Outcome
 
@@ -39,15 +39,15 @@ Expose the domain through a clear GraphQL contract, no storage complexity yet.
 Scope
 
 - `services/api`:
-    - GraphQL schema:
-        - Customer / Project / EnergyAsset
-        - queries for:
-            - `customer(id)`
-            - `customers`
-            - `projectsByCustomer(customerId, first, after, status)`
-            - `energyAssetsByProject(projectId, first, after, type)`
-    - resolvers backed by in-memory seed data
-    - minimal handler for local dev
+  - GraphQL schema:
+    - Customer / Project / EnergyAsset
+    - queries for:
+      - `customer(id)`
+      - `customers`
+      - `projectsByCustomer(customerId, first, after, status)`
+      - `energyAssetsByProject(projectId, first, after, type)`
+  - resolvers backed by in-memory seed data
+  - minimal handler for local dev
 
 Outcome
 
@@ -65,15 +65,15 @@ Scope
 
 - Add DynamoDB Local via Docker.
 - Introduce repository layer:
-    - customers, projects, assets
+  - customers, projects, assets
 - Implement:
-    - cursor-based pagination
-    - filters:
-        - Project by status
-        - EnergyAsset by type
+  - cursor-based pagination
+  - filters:
+    - Project by status
+    - EnergyAsset by type
 - Tests:
-    - pagination behavior
-    - filters over seeded data
+  - pagination behavior
+  - filters over seeded data
 
 Outcome
 
@@ -90,18 +90,18 @@ Demonstrate production discipline: security, consistency, and compatibility.
 Scope
 
 - API key auth:
-    - roles: admin, user, readonly
-    - enforced in GraphQL context
+  - roles: admin, user, readonly
+  - enforced in GraphQL context
 - Typed error taxonomy:
-    - DOMAIN_ERROR, AUTH_ERROR, VALIDATION_ERROR, NOT_FOUND, SYSTEM_ERROR
+  - DOMAIN_ERROR, AUTH_ERROR, VALIDATION_ERROR, NOT_FOUND, SYSTEM_ERROR
 - GraphQL:
-    - map known errors into `extensions.code`
+  - map known errors into `extensions.code`
 - REST:
-    - one mirror endpoint for projects-by-customer
-    - identical error shapes and status codes
+  - one mirror endpoint for projects-by-customer
+  - identical error shapes and status codes
 - Tests:
-    - unauthorized and forbidden
-    - error mapping for GraphQL and REST
+  - unauthorized and forbidden
+  - error mapping for GraphQL and REST
 
 Outcome
 
@@ -120,20 +120,20 @@ Scope
 Backend
 
 - Dataloader-style batching:
-    - projects by customer id
-    - assets by project id
+  - projects by customer id
+  - assets by project id
 - Structured logging:
-    - traceId, path, role, duration, result
+  - traceId, path, role, duration, result
 - Propagate `traceId` from request headers.
 
 Frontend
 
 - Vite + React + TypeScript app:
-    - list customers
-    - show projects for selected customer (with status filter)
-    - show assets for selected project (with type filter)
+  - list customers
+  - show projects for selected customer (with status filter)
+  - show assets for selected project (with type filter)
 - API client:
-    - sends API key and `x-trace-id`
+  - sends API key and `x-trace-id`
 
 Outcome
 
@@ -151,13 +151,13 @@ Show workflow and event thinking without heavy infra.
 Scope
 
 - Add `activateEnergyAsset(assetId)` mutation:
-    - validate asset
-    - mark as active
-    - log `EnergyAssetActivated` event with traceId
+  - validate asset
+  - mark as active
+  - log `EnergyAssetActivated` event with traceId
 - Tests:
-    - success
-    - not found
-    - forbidden
+  - success
+  - not found
+  - forbidden
 
 Outcome
 
@@ -171,22 +171,22 @@ Outcome
 Use selectively depending on the company. Do not ship all by default.
 
 1. Multi-tenant model (0.5–1 day)
-    - add tenantId to keys
-    - enforce per-key isolation
+   - add tenantId to keys
+   - enforce per-key isolation
 
 2. Observability stack (1 day)
-    - OpenTelemetry wiring in API
-    - trace context from client to backend
-    - basic SLIs: p95 latency, error rate
+   - OpenTelemetry wiring in API
+   - trace context from client to backend
+   - basic SLIs: p95 latency, error rate
 
 3. Deployment story (1–2 days)
-    - simple IaC plus a CI pipeline example
-    - minimal config for one cloud provider
+   - simple IaC plus a CI pipeline example
+   - minimal config for one cloud provider
 
 4. Caching strategy (0.5 day)
-    - persisted GraphQL operations
-    - HTTP caching for REST endpoint
+   - persisted GraphQL operations
+   - HTTP caching for REST endpoint
 
 5. Microfrontend shell note (0.5 day)
-    - document how `frontend` can be mounted as a microfrontend
-    - optional minimal shell for demonstration
+   - document how `frontend` can be mounted as a microfrontend
+   - optional minimal shell for demonstration

@@ -1,6 +1,6 @@
-import {gql} from "@apollo/client";
+import { gql } from "@apollo/client";
 
-export const CUSTOMERS = gql/* GraphQL */`
+export const CUSTOMERS = gql /* GraphQL */ `
   query Customers {
     customers {
       id
@@ -10,7 +10,7 @@ export const CUSTOMERS = gql/* GraphQL */`
   }
 `;
 
-export const PROJECTS_BY_CUSTOMER = gql/* GraphQL */`
+export const PROJECTS_BY_CUSTOMER = gql /* GraphQL */ `
   query ProjectsByCustomer($customerId: ID!, $first: Int, $status: ProjectStatus) {
     projectsByCustomer(customerId: $customerId, first: $first, status: $status) {
       edges {
@@ -30,7 +30,7 @@ export const PROJECTS_BY_CUSTOMER = gql/* GraphQL */`
   }
 `;
 
-export const ASSETS_BY_PROJECT = gql/* GraphQL */`
+export const ASSETS_BY_PROJECT = gql /* GraphQL */ `
   query EnergyAssetsByProject($projectId: ID!, $first: Int, $type: EnergyAssetType) {
     energyAssetsByProject(projectId: $projectId, first: $first, type: $type) {
       edges {
@@ -50,4 +50,3 @@ export const ASSETS_BY_PROJECT = gql/* GraphQL */`
     }
   }
 `;
-

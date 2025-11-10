@@ -3,10 +3,7 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "lib": [
-      "ES2022",
-      "DOM"
-    ],
+    "lib": ["ES2022", "DOM"],
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -24,27 +21,12 @@
     "allowJs": false,
     "baseUrl": ".",
     "paths": {
-      "@energy-portfolio/domain": [
-        "packages/domain/src"
-      ],
-      "@energy-portfolio/domain/*": [
-        "packages/domain/src/*"
-      ],
-      "@energy-portfolio/shared": [
-        "packages/shared/src"
-      ],
-      "@energy-portfolio/shared/*": [
-        "packages/shared/src/*"
-      ]
+      "@energy-portfolio/domain": ["packages/domain/src"],
+      "@energy-portfolio/domain/*": ["packages/domain/src/*"],
+      "@energy-portfolio/shared": ["packages/shared/src"],
+      "@energy-portfolio/shared/*": ["packages/shared/src/*"]
     },
-    "types": [
-      "node",
-      "vitest/globals"
-    ]
+    "types": ["node", "vitest/globals"]
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "build"
-  ]
+  "exclude": ["node_modules", "dist", "build"]
 }
