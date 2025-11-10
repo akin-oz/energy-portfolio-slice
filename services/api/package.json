@@ -13,7 +13,8 @@
   "dependencies": {
     "@apollo/server": "^4.12.2",
     "@energy-portfolio/domain": "workspace:*",
-    "@energy-portfolio/shared": "workspace:*"
+    "@energy-portfolio/shared": "workspace:*",
+    "graphql": "^16.12.0"
   },
   "devDependencies": {
     "tsx": "^4.7.0"

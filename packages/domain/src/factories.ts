@@ -14,7 +14,11 @@ export function createCustomer(params?: Partial<Customer>): Customer {
   return {
     id: params?.id ?? nextId("cust"),
     name: params?.name ?? "Sample Customer",
+    contactName: params?.contactName ?? "Alex Manager",
+    contactEmail: params?.contactEmail ?? "ops@example.com",
+    country: params?.country ?? "DE",
     createdAt: params?.createdAt ?? nowIso(),
+    updatedAt: params?.updatedAt ?? nowIso(),
   };
 }
 
@@ -24,7 +28,13 @@ export function createProject(customerId: ID, params?: Partial<Project>): Projec
     customerId,
     name: params?.name ?? "Sample Project",
     status: params?.status ?? ProjectStatus.Active,
+    totalCapacityKw: params?.totalCapacityKw ?? 0,
+    city: params?.city ?? "Berlin",
+    country: params?.country ?? "DE",
+    startDate: params?.startDate ?? nowIso(),
+    endDate: params?.endDate ?? null,
     createdAt: params?.createdAt ?? nowIso(),
+    updatedAt: params?.updatedAt ?? nowIso(),
   };
 }
 
@@ -33,9 +43,14 @@ export function createEnergyAsset(projectId: ID, params?: Partial<EnergyAsset>):
     id: params?.id ?? nextId("asset"),
     projectId,
     type: params?.type ?? EnergyAssetType.Solar,
+    name: params?.name ?? "PV Inverter",
     capacityKw: params?.capacityKw ?? 100,
     active: params?.active ?? false,
+    manufacturer: params?.manufacturer ?? "GenericCo",
+    model: params?.model ?? "Model-X",
+    commissionedAt: params?.commissionedAt ?? null,
     createdAt: params?.createdAt ?? nowIso(),
+    updatedAt: params?.updatedAt ?? nowIso(),
   };
 }
 

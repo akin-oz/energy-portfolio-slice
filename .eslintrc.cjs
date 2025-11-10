@@ -46,8 +46,8 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": "off",
     // Prettier formatting surfaced via ESLint
     "prettier/prettier": "warn",
-    // Allow pragmatic any in data plumbing; tighten later as needed
-    "@typescript-eslint/no-explicit-any": "off",
+    // Enforce: never use `any`
+    "@typescript-eslint/no-explicit-any": "error",
     // React's default export can be ESM/CJS; avoid false positives
     "import/default": "off",
     // Avoid noisy suggestions around named vs default imports

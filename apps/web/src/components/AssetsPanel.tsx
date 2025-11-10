@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { ASSETS_BY_PROJECT } from "../graphql/queries";
 import type { EnergyAssetType } from "../types";
+import type { AssetsByProjectQuery, AssetsByProjectVars } from "../graphql/types";
 
 export interface AssetsPanelProps {
   readonly projectId: string | null;
@@ -10,16 +11,19 @@ export interface AssetsPanelProps {
 }
 
 export function AssetsPanel({ projectId, type, onChangeType }: AssetsPanelProps) {
-  const variables: any = React.useMemo(
-    () => ({
+  const variables = React.useMemo<AssetsByProjectVars | undefined>(() => {
+    if (!projectId) return undefined;
+    return {
       projectId,
       first: 20,
-      type: type ?? null,
-    }),
-    [projectId, type],
-  );
+      type: type ?? undefined,
+    };
+  }, [projectId, type]);
 
-  const { data, loading, error, refetch, fetchMore } = useQuery(ASSETS_BY_PROJECT, {
+  const { data, loading, error, refetch, fetchMore } = useQuery<
+    AssetsByProjectQuery,
+    AssetsByProjectVars
+  >(ASSETS_BY_PROJECT, {
     variables,
     skip: !projectId,
     notifyOnNetworkStatusChange: true,
@@ -58,7 +62,7 @@ export function AssetsPanel({ projectId, type, onChangeType }: AssetsPanelProps)
         </div>
       )}
       <div className="list">
-        {edges.map((e: any) => {
+        {edges.map((e) => {
           const a = e.node;
           return (
             <div key={a.id} className="item">
@@ -87,10 +91,13 @@ export function AssetsPanel({ projectId, type, onChangeType }: AssetsPanelProps)
             onClick={() =>
               fetchMore({
                 variables: {
-                  ...variables,
-                  after: pageInfo.endCursor,
+                  ...(variables as AssetsByProjectVars),
+                  after: pageInfo.endCursor ?? undefined,
                 },
-                updateQuery: (prev, { fetchMoreResult }) => {
+                updateQuery: (
+                  prev: AssetsByProjectQuery,
+                  { fetchMoreResult }: { fetchMoreResult?: AssetsByProjectQuery },
+                ) => {
                   if (!fetchMoreResult) return prev;
                   return {
                     ...fetchMoreResult,

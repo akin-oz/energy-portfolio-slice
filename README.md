@@ -111,6 +111,8 @@ The schema models three core entities:
 - `Project`
 - `EnergyAsset`
 
+Why GraphQL here: composition across customers → projects → assets, the ability to fetch precisely what each view needs (and nothing more), and a single contract that multiple product surfaces can share (web, mobile, ops tooling) without bespoke endpoints.
+
 Example queries:
 
 ```graphql
@@ -123,16 +125,25 @@ query CustomerById {
   }
 }
 
-# Get all customers
+# Get customers (paginated)
 query Customers {
-  customers {
-    id
-    name
-    createdAt
+  customers(first: 10) {
+    edges {
+      cursor
+      node {
+        id
+        name
+        createdAt
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
   }
 }
 
-# Get projects for a customer with pagination and optional status filter
+# Get projects for a customer (paginated, optional status filter)
 query ProjectsByCustomer {
   projectsByCustomer(customerId: "cust_1", first: 10, status: ACTIVE) {
     edges {
@@ -151,7 +162,7 @@ query ProjectsByCustomer {
   }
 }
 
-# Get energy assets for a project with pagination and optional type filter
+# Get energy assets for a project (paginated, optional type filter)
 query EnergyAssetsByProject {
   energyAssetsByProject(projectId: "proj_3", first: 10, type: SOLAR) {
     edges {
@@ -173,6 +184,19 @@ query EnergyAssetsByProject {
 ```
 
 Resolvers are backed by seed data and structured so a real datastore can be plugged in without changing the contract.
+
+Errors: client-visible validation errors (e.g. invalid cursor) surface with `extensions.code`, for example:
+
+```json
+{
+  "errors": [
+    {
+      "message": "Invalid cursor",
+      "extensions": { "code": "VALIDATION_ERROR" }
+    }
+  ]
+}
+```
 
 ---
 

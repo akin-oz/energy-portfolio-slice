@@ -12,10 +12,21 @@ enum EnergyAssetType {
   OTHER
 }
 
+"""
+Energy portfolio domain schema.
+
+GraphQL fits this product because it lets us compose across customers → projects → assets
+with precise payloads per view. It exposes a single graph that different product surfaces
+can slice: lists with pagination, detail panes, and filters (status/type) without over‑fetching.
+"""
 type Customer {
   id: ID!
   name: String!
+  contactName: String
+  contactEmail: String
+  country: String
   createdAt: String!
+  updatedAt: String
 }
 
 type Project {
@@ -23,21 +34,42 @@ type Project {
   customerId: ID!
   name: String!
   status: ProjectStatus!
+  totalCapacityKw: Int
+  city: String
+  country: String
+  startDate: String
+  endDate: String
   createdAt: String!
+  updatedAt: String
 }
 
 type EnergyAsset {
   id: ID!
   projectId: ID!
   type: EnergyAssetType!
+  name: String
   capacityKw: Int!
   active: Boolean!
+  manufacturer: String
+  model: String
+  commissionedAt: String
   createdAt: String!
+  updatedAt: String
 }
 
 type PageInfo {
   endCursor: String
   hasNextPage: Boolean!
+}
+
+type CustomerEdge {
+  cursor: String!
+  node: Customer!
+}
+
+type CustomerConnection {
+  edges: [CustomerEdge!]!
+  pageInfo: PageInfo!
 }
 
 type ProjectEdge {
@@ -62,7 +94,7 @@ type EnergyAssetConnection {
 
 type Query {
   customer(id: ID!): Customer
-  customers: [Customer!]!
+  customers(first: Int, after: String): CustomerConnection!
 
   projectsByCustomer(
     customerId: ID!

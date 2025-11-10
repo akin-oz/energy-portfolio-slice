@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { PROJECTS_BY_CUSTOMER } from "../graphql/queries";
 import type { ProjectStatus } from "../types";
+import type { ProjectsByCustomerQuery, ProjectsByCustomerVars } from "../graphql/types";
 
 export interface ProjectsPanelProps {
   readonly customerId: string | null;
@@ -18,16 +19,19 @@ export function ProjectsPanel({
   status,
   onChangeStatus,
 }: ProjectsPanelProps) {
-  const variables: any = React.useMemo(
-    () => ({
+  const variables = React.useMemo<ProjectsByCustomerVars | undefined>(() => {
+    if (!customerId) return undefined;
+    return {
       customerId,
       first: 20,
-      status: status ?? null,
-    }),
-    [customerId, status],
-  );
+      status: status ?? undefined,
+    };
+  }, [customerId, status]);
 
-  const { data, loading, error, refetch, fetchMore } = useQuery(PROJECTS_BY_CUSTOMER, {
+  const { data, loading, error, refetch, fetchMore } = useQuery<
+    ProjectsByCustomerQuery,
+    ProjectsByCustomerVars
+  >(PROJECTS_BY_CUSTOMER, {
     variables,
     skip: !customerId,
     notifyOnNetworkStatusChange: true,
@@ -66,7 +70,7 @@ export function ProjectsPanel({
         </div>
       )}
       <div className="list">
-        {edges.map((e: any) => {
+        {edges.map((e) => {
           const p = e.node;
           return (
             <button
@@ -93,10 +97,13 @@ export function ProjectsPanel({
             onClick={() =>
               fetchMore({
                 variables: {
-                  ...variables,
-                  after: pageInfo.endCursor,
+                  ...(variables as ProjectsByCustomerVars),
+                  after: pageInfo.endCursor ?? undefined,
                 },
-                updateQuery: (prev, { fetchMoreResult }) => {
+                updateQuery: (
+                  prev: ProjectsByCustomerQuery,
+                  { fetchMoreResult }: { fetchMoreResult?: ProjectsByCustomerQuery },
+                ) => {
                   if (!fetchMoreResult) return prev;
                   return {
                     ...fetchMoreResult,
