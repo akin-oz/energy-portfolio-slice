@@ -231,6 +231,30 @@ Errors: client-visible validation errors (e.g. invalid cursor) surface with `ext
 
 ---
 
+## Request flow (sequence)
+
+A typical read flow, e.g. “show projects for a customer”:
+
+```mermaid
+sequenceDiagram
+    participant User as User
+    participant Web as Web App (React)
+    participant API as GraphQL API
+    participant Domain as Domain Layer
+    participant Data as Seed Data
+
+    User->>Web: Select customer
+    Web->>API: projectsByCustomer(customerId, first, after, status)
+    API->>Domain: Validate input, apply rules
+    Domain->>Data: Fetch projects for customer
+    Data-->>Domain: Matching projects
+    Domain-->>API: Project list + pagination info
+    API-->>Web: GraphQL response
+    Web-->>User: Render projects list
+```
+
+---
+
 ## Roadmap / Extensions
 
 These are intentionally optional and can be added depending on the audience:
