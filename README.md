@@ -22,6 +22,22 @@ infra.
 
 ---
 
+## Note for epilot reviewers
+
+Eka mentions you’re open to candidates using an existing project as a technical assessment. I created this repo
+specifically with that in mind.
+
+If you choose to review this instead of (or in addition to) a custom assignment, here’s what it is meant to show:
+
+- A **vertical slice** that could exist in your ecosystem: customers → projects → energy assets.
+- **API-first, domain-first design** with clear GraphQL contracts and pagination/filters.
+- A **TypeScript monorepo layout** that keeps domain, API, and UI cleanly separated and easy to extend.
+- An example of how I think about **errors, testability, and production readiness** (without overbuilding infra).
+
+I’m happy to walk through decisions, extend this slice, or adapt it live in an interview setting.
+
+---
+
 ## Tech stack
 
 Core choices:
@@ -111,7 +127,9 @@ The schema models three core entities:
 - `Project`
 - `EnergyAsset`
 
-Why GraphQL here: composition across customers → projects → assets, the ability to fetch precisely what each view needs (and nothing more), and a single contract that multiple product surfaces can share (web, mobile, ops tooling) without bespoke endpoints.
+Why GraphQL here: composition across customers → projects → assets, the ability to fetch precisely what each view
+needs (and nothing more), and a single contract that multiple product surfaces can share (web, mobile, ops tooling)
+without bespoke endpoints.
 
 Example queries:
 
@@ -192,7 +210,9 @@ Errors: client-visible validation errors (e.g. invalid cursor) surface with `ext
   "errors": [
     {
       "message": "Invalid cursor",
-      "extensions": { "code": "VALIDATION_ERROR" }
+      "extensions": {
+        "code": "VALIDATION_ERROR"
+      }
     }
   ]
 }
@@ -225,11 +245,11 @@ These are intentionally optional and can be added depending on the audience:
 
 ---
 
-## How to read this as a hiring manager
+## How to read this as a reviewer
 
 If you’re skimming:
 
-1. `packages/domain` – how I think about models.
-2. `services/api` – how I design contracts and boundaries.
+1. `packages/domain` – how I think about models and invariants.
+2. `services/api` – how I design contracts, pagination, and error handling.
 3. `apps/web` – how I integrate UI with those contracts.
-4. Tests & README – proof it’s structured like a real product slice, not a throwaway demo.
+4. Tests & README – proof it’s structured like a real product slice, suitable as an example for a technical assessment.
