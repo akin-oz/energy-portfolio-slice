@@ -253,10 +253,10 @@ sequenceDiagram
     Web-->>User: Render projects list
 ```
 This shows how the vertical slice runs end to end:
-•	React stays thin.
-•	GraphQL is the contract.
-•	Domain owns the rules.
-•	Storage is swappable.
+-	React stays thin.
+-	GraphQL is the contract.
+-	Domain owns the rules.
+-	Storage is swappable.
 
 ---
 
